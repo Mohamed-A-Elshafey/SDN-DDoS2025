@@ -1,0 +1,21 @@
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore system files
+Thumbs.db
+.DS_Store
+
+# Ignore sensitive information
+credentials.txt
+
+# Ignore generated files
+/dist/
+/docs/
+
+# Ignore specific file types
+*.log
+*.csv
+
+# Ignore a specific directory
+/data/raw/
