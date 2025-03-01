@@ -58,4 +58,4 @@ https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025/
 
 ## License
 
-This dataset is licensed under the [Mohamed-A-Elshafey] license. See the LICENSE file for details.
+This dataset is licensed under the [XXX] license. See the LICENSE file for details.
