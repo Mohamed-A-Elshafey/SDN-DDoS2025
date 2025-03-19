@@ -12,8 +12,8 @@ The SDN-CSV files were generated through the following steps:
     * Installed Ubuntu 22.04.3 LTS as the base operating system for the virtual environment.
 
 2. **Install Mininet and Ryu Controller:**
-    * Installed Mininet, a network emulator, to create a virtual network on the Ubuntu machine, enabling simulation of the SDN environment. Mininet allows for creating virtual hosts, switches, controllers, and links, facilitating testing of network configurations and protocols without physical hardware [36].
-    * Installed Ryu, an open-source SDN controller framework written in Python. Ryu provides a platform for developing SDN applications and managing network flows and policies. It supports OpenFlow and other southbound protocols, enabling communication with network devices to configure the network [37].
+    * Installed Mininet, a network emulator, to create a virtual network on the Ubuntu machine, enabling simulation of the SDN environment. Mininet allows for creating virtual hosts, switches, controllers, and links, facilitating testing of network configurations and protocols without physical hardware .
+    * Installed Ryu, an open-source SDN controller framework written in Python. Ryu provides a platform for developing SDN applications and managing network flows and policies. It supports OpenFlow and other southbound protocols, enabling communication with network devices to configure the network.
 
 3. **Build SDN Network:**
     * Implemented an SDN network topology similar to the CIC-DDoS2019 dataset network (see Figure 4).
@@ -24,11 +24,11 @@ The SDN-CSV files were generated through the following steps:
 
 4. **Ingest CIC-DDoS2019 PCAP Files:**
     * Ingested the CIC-DDoS2019 dataset PCAP files into the SDN network through one of the interfaces.
-    * Used Wireshark, a network protocol analyzer, to capture and inspect the ingested CIC-DDoS2019 traffic (see Figure 5) [38].
+    * Used Wireshark, a network protocol analyzer, to capture and inspect the ingested CIC-DDoS2019 traffic (see Figure 5) .
 
 5. **Capture OpenFlow Statistics:**
     * Developed a Python script to capture statistics from the Ryu controller's REST API.
-    * Utilized the Ryu REST API to gather flow, port, and switch description statistics [39].
+    * Utilized the Ryu REST API to gather flow, port, and switch description statistics.
     * Processed and saved the collected data for further analysis.
 
 6. **Parse Captured Traffic Statistics:**
