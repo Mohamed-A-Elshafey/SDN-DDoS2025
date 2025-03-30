@@ -8,35 +8,35 @@ SDN-DDoD2025 dataset was collected from an established SDN environment with Open
 
 This document outlines the steps required to generate SDN-CSV files as depicted in the methodology flowchart.
 
-1. #Establish SDN Virtual Environment
+#1. Establish SDN Virtual Environment
 
 First, we installed Ubuntu 22.04.3 LTS as the base operating system.
 
-2. Install Mininet and Ryu Controller
+#2. Install Mininet and Ryu Controller
 
 Mininet is a network emulator that allows users to create virtual networks on a single machine, widely used for SDN simulations. Ryu is an open-source SDN controller written in Python that provides network programmability.
 
 Installation Steps:
 
-Update system
-sudo apt update
+   -Update system
+   sudo apt update
 
-Install Mininet
-sudo apt install mininet -y
+  -Install Mininet
+  sudo apt install mininet -y
 
-# Set up a Python virtual environment for Ryu
-python3 -m venv ryu-env
-source ryu-env/bin/activate
+  -Set up a Python virtual environment for Ryu
+  python3 -m venv ryu-env
+  source ryu-env/bin/activate
 
-# Install Ryu and dependencies
-pip install ryu
-dep pip install eventlet==0.30.2
-pip install psutil
+  -Install Ryu and dependencies
+  pip install ryu
+  dep pip install eventlet==0.30.2
+  pip install psutil
 
-# Start the Ryu controller
-ryu-manager ryu.app.ofctl_rest
+  -Start the Ryu controller
+  ryu-manager ryu.app.ofctl_rest
 
-3. Build SDN Network
+#3. Build SDN Network
 
 We implemented an SDN network similar to CIC-DDoS2019, consisting of:
 
