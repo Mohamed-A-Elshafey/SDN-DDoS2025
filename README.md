@@ -55,9 +55,7 @@ Installation Steps:
 Captured traffic contains network statistics such as:Packet counts , Byte counts,Flow durations,Entropy ,CPU usage
 
 These extracted features are saved in a CSV file (network-stats.csv) for deep learning-based DDoS detection.
-
-7. Final Output
-
+# 7. Final Output
 The extracted SDN statistics are stored in network-stats.csv, which can be used for machine learning and deep learning models.
 
 
@@ -79,6 +77,3 @@ If you use this dataset in your research, please cite it as:
 https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025/
 
 
-## License
-
-This dataset is licensed under the MIT license. See the LICENSE file for details.
