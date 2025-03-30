@@ -4,40 +4,104 @@
 
 SDN-DDoD2025 dataset was collected from an established SDN environment with OpenFlow-based additional features from ICDDoS2019. SDN-DDoD2025 contains port statistics and flow statistics. The captured port statistics, e.g., the number of packets and bytes transmitted and received, and error statistics. Also, the flow statistics, e.g., packet and byte counts, flow duration, and actions associated with the flow. This data provides a comprehensive view of the traffic and performance characteristics of the established SDN network.
 
-## Data Collection
+#SDN-CSV File Generation Methodology
 
-The SDN-CSV files were generated through the following steps:
+This document outlines the steps required to generate SDN-CSV files as depicted in the methodology flowchart.
 
-1. **Establish SDN Virtual Environment:**
-    * Installed Ubuntu 22.04.3 LTS as the base operating system for the virtual environment.
+1. Establish SDN Virtual Environment
 
-2. **Install Mininet and Ryu Controller:**
-    * Installed Mininet, a network emulator, to create a virtual network on the Ubuntu machine, enabling simulation of the SDN environment. Mininet allows for creating virtual hosts, switches, controllers, and links, facilitating testing of network configurations and protocols without physical hardware .
-    * Installed Ryu, an open-source SDN controller framework written in Python. Ryu provides a platform for developing SDN applications and managing network flows and policies. It supports OpenFlow and other southbound protocols, enabling communication with network devices to configure the network.
+First, we installed Ubuntu 22.04.3 LTS as the base operating system.
 
-3. **Build SDN Network:**
-    * Implemented an SDN network topology similar to the CIC-DDoS2019 dataset network (see Figure 4).
-    * Designed two separate networks:
-        * **Victim-Network:** Consists of devices connected to a Ryu controller via a switch, simulating benign behaviors.
-        * **Attack-Network:** A separate infrastructure used to execute various DDoS attacks.
-    * Utilized the OpenFlow 1.3 protocol for compatibility with the Ryu controller and to enable connectivity between hosts.
+2. Install Mininet and Ryu Controller
 
-4. **Ingest CIC-DDoS2019 PCAP Files:**
-    * Ingested the CIC-DDoS2019 dataset PCAP files into the SDN network through one of the interfaces.
-    * Used Wireshark, a network protocol analyzer, to capture and inspect the ingested CIC-DDoS2019 traffic (see Figure 5) .
+Mininet is a network emulator that allows users to create virtual networks on a single machine, widely used for SDN simulations. Ryu is an open-source SDN controller written in Python that provides network programmability.
 
-5. **Capture OpenFlow Statistics:**
-    * Developed a Python script to capture statistics from the Ryu controller's REST API.
-    * Utilized the Ryu REST API to gather flow, port, and switch description statistics.
-    * Processed and saved the collected data for further analysis.
+Installation Steps:
 
-6. **Parse Captured Traffic Statistics:**
-    * Parsed the captured traffic statistics, which include time series data for each switch, port, and flow.
-    * Extracted high-level metrics such as packet counts, byte counts, flow durations, entropy, and CPU usage.
+# Update system
+sudo apt update
 
-7. **Save Extracted Features in CSV Files:**
-    * Saved the parsed features in CSV file format (`networkstats.csv`) for subsequent analysis and use in deep learning models for DDoS detection.
-The data was collected in a controlled SDN environment using Mininet and POX controller.  DDoS attacks were generated using a variety of tools, including hping3 and Slowloris. Network traffic was captured using tcpdump and labeled using CICFlowMeter. The data collection period spanned from [Start Date] to [End Date].
+# Install Mininet
+sudo apt install mininet -y
+
+# Set up a Python virtual environment for Ryu
+python3 -m venv ryu-env
+source ryu-env/bin/activate
+
+# Install Ryu and dependencies
+pip install ryu
+dep pip install eventlet==0.30.2
+pip install psutil
+
+# Start the Ryu controller
+ryu-manager ryu.app.ofctl_rest
+
+3. Build SDN Network
+
+We implemented an SDN network similar to CIC-DDoS2019, consisting of:
+
+Attack-Network: A dedicated infrastructure for launching DDoS attacks.
+
+Victim-Network: A separate network connected to the controller via a switch, running normal benign traffic.
+
+We used OpenFlow 1.3 for compatibility with the Ryu controller.
+
+4. Ingest PCAP Files from CIC-DDoS2019
+
+The next step is to inject the CIC-DDoS2019 dataset PCAP files into the network using Wireshark, a widely used network protocol analyzer.
+
+5. Capture OpenFlow Statistics using Ryu's REST API
+
+We developed a Python script to capture network statistics via the Ryu REST API, collecting flow, port, and switch statistics for further analysis.
+
+import requests
+import csv
+
+def get_switches():
+    response = requests.get("http://localhost:8080/stats/switches")
+    return response.json()
+
+def get_port_stats(dpid):
+    response = requests.get(f"http://localhost:8080/stats/port/{dpid}")
+    return response.json()
+
+def get_flow_stats(dpid):
+    response = requests.get(f"http://localhost:8080/stats/flow/{dpid}")
+    return response.json()
+
+def write_to_csv(data, filename="network-stats.csv"):
+    with open(filename, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(data)
+
+# Example Usage
+switches = get_switches()
+for switch in switches:
+    port_stats = get_port_stats(switch)
+    flow_stats = get_flow_stats(switch)
+    write_to_csv([switch, port_stats, flow_stats])
+
+6. Parse and Store Network Statistics
+
+Captured traffic contains network statistics such as:
+
+Packet counts
+
+Byte counts
+
+Flow durations
+
+Entropy
+
+CPU usage
+
+These extracted features are saved in a CSV file (network-stats.csv) for deep learning-based DDoS detection.
+
+7. Final Output
+
+The extracted SDN statistics are stored in network-stats.csv, which can be used for machine learning and deep learning models.
+
+
 
 ## Data Format
 
