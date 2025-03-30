@@ -8,11 +8,11 @@ SDN-DDoD2025 dataset was collected from an established SDN environment with Open
 
 This document outlines the steps required to generate SDN-CSV files as depicted in the methodology flowchart.
 
-#1. Establish SDN Virtual Environment
+1. Establish SDN Virtual Environment
 
 First, we installed Ubuntu 22.04.3 LTS as the base operating system.
 
-#2. Install Mininet and Ryu Controller
+2. Install Mininet and Ryu Controller
 
 Mininet is a network emulator that allows users to create virtual networks on a single machine, widely used for SDN simulations. Ryu is an open-source SDN controller written in Python that provides network programmability.
 
@@ -36,64 +36,27 @@ Installation Steps:
   -Start the Ryu controller
   ryu-manager ryu.app.ofctl_rest
 
-#3. Build SDN Network
+3. Build SDN Network
 
-We implemented an SDN network similar to CIC-DDoS2019, consisting of:
+ We implemented an SDN network similar to CIC-DDoS2019, consisting of:
 
-Attack-Network: A dedicated infrastructure for launching DDoS attacks.
+ Attack-Network: A dedicated infrastructure for launching DDoS attacks.
 
-Victim-Network: A separate network connected to the controller via a switch, running normal benign traffic.
+ Victim-Network: A separate network connected to the controller via a switch, running normal benign traffic.
 
-We used OpenFlow 1.3 for compatibility with the Ryu controller.
+ We used OpenFlow 1.3 for compatibility with the Ryu controller.
 
 4. Ingest PCAP Files from CIC-DDoS2019
 
-The next step is to inject the CIC-DDoS2019 dataset PCAP files into the network using Wireshark, a widely used network protocol analyzer.
+ The next step is to inject the CIC-DDoS2019 dataset PCAP files into the network using Wireshark, a widely used network protocol analyzer.
 
 5. Capture OpenFlow Statistics using Ryu's REST API
 
-We developed a Python script to capture network statistics via the Ryu REST API, collecting flow, port, and switch statistics for further analysis.
-
-import requests
-import csv
-
-def get_switches():
-    response = requests.get("http://localhost:8080/stats/switches")
-    return response.json()
-
-def get_port_stats(dpid):
-    response = requests.get(f"http://localhost:8080/stats/port/{dpid}")
-    return response.json()
-
-def get_flow_stats(dpid):
-    response = requests.get(f"http://localhost:8080/stats/flow/{dpid}")
-    return response.json()
-
-def write_to_csv(data, filename="network-stats.csv"):
-    with open(filename, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(data)
-
-# Example Usage
-switches = get_switches()
-for switch in switches:
-    port_stats = get_port_stats(switch)
-    flow_stats = get_flow_stats(switch)
-    write_to_csv([switch, port_stats, flow_stats])
+ We developed a Python script to capture network statistics via the Ryu REST API, collecting flow, port, and switch statistics for further analysis.
 
 6. Parse and Store Network Statistics
 
-Captured traffic contains network statistics such as:
-
-Packet counts
-
-Byte counts
-
-Flow durations
-
-Entropy
-
-CPU usage
+Captured traffic contains network statistics such as:Packet counts , Byte counts,Flow durations,Entropy ,CPU usage
 
 These extracted features are saved in a CSV file (network-stats.csv) for deep learning-based DDoS detection.
 
