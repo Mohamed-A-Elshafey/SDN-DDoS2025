@@ -17,4 +17,4 @@
 
 5. **Dense Layers**: Two dense layers with 256 units, followed by batch normalization and an activation function.
 
-6. **Output Layer**: A single dense unit with sigmoid activation for binary classification.
+6. **Output Layer**: A single dense unit with sigmoid activation for binary classification. 
