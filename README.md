@@ -8,7 +8,7 @@ SDN-DDoD2025 dataset was collected from an established SDN environment with Open
 
 This document outlines the steps required to generate SDN-CSV files as depicted in the methodology flowchart.
 
-1. Establish SDN Virtual Environment
+1. #Establish SDN Virtual Environment
 
 First, we installed Ubuntu 22.04.3 LTS as the base operating system.
 
@@ -18,10 +18,10 @@ Mininet is a network emulator that allows users to create virtual networks on a 
 
 Installation Steps:
 
-# Update system
+Update system
 sudo apt update
 
-# Install Mininet
+Install Mininet
 sudo apt install mininet -y
 
 # Set up a Python virtual environment for Ryu
