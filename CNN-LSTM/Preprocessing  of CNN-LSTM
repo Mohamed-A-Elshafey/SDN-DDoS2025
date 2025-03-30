@@ -1,0 +1,34 @@
+# Preprocessing Operations for SDN-DDoS2025 Dataset
+
+The following outlines the respective preprocessing operations conducted  
+on both datasets, **SDN-DDoS2025** as follows:
+
+## 1. Data Loading
+- Load the dataset from a CSV file.
+- Display the initial shape of the DataFrame.
+
+## 2. Data Cleaning
+- Remove irrelevant or problematic columns.
+- Identify and remove non-numeric columns (categorical or string data).
+- Impute missing values (NaNs) in numerical columns using the median.
+- Replace zero values with a small positive value to avoid division by zero or log transformation issues.
+
+## 3. Further Data Cleaning and Feature Engineering
+- Convert negative numbers to their absolute values.
+- Remove constant features (features with a single unique value).
+- Remove quasi-constant features (features with very low variance).
+- Remove duplicated features.
+- Remove highly correlated features.
+- Apply one-hot encoding to categorical features.
+- Save the preprocessed DataFrame to a new CSV file.
+
+## 4. Feature Scaling
+- Apply Min-Max scaling to bring features to the range [0, 1].
+- Scale the data from [0, 1] to [-1, 1].
+- Combine scaling steps into a preprocessing pipeline.
+- Apply the scaling pipeline to the feature data.
+- Save the scaled DataFrame to a new CSV file.
+
+## 5. Data Inspection and Diversity Metrics
+- Display the shape of the processed DataFrame.
+- Calculate and print the Shannon Diversity Index (H), Maximum Diversity (Hmax), and Pielou Index (J) to assess feature distribution diversity.
