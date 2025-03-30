@@ -1,0 +1,36 @@
+## The Proposed CNN-LSTM Hybrid Model: Settings and Training Hyperparameters
+
+| **Parameter**          | **Value**    |
+|------------------------|-------------|
+| **Conv-1D Layer**      |             |
+| Number of Filters      | 32          |
+| Activation Function    | ReLU        |
+| Padding               | Same        |
+| Regularization        | L2 (0.001)  |
+| MaxPooling Pool Size  | 2           |
+| **Inception Module**   |             |
+| Conv1D Filters        | 32          |
+| Conv1D Kernel Sizes   | 1, 3, 5     |
+| Concatenation         | Yes         |
+| MaxPooling Pool Size  | 2           |
+| Dropout Rate         | 30%         |
+| **LSTM Layer**        |             |
+| Number of Units       | 256         |
+| Return Sequences      | False       |
+| Regularization        | L2 (0.001)  |
+| **Dense Layer**       |             |
+| Number of Units       | 256         |
+| Activation Function   | ReLU        |
+| Regularization        | L2 (0.001)  |
+| Batch Normalization   | Yes         |
+| **Output Layer**      |             |
+| Number of Units       | 1           |
+| Activation Function   | Sigmoid     |
+| **Training Hyperparameters** |     |
+| Optimizer Type        | Adam        |
+| Learning Rate        | 5e-4        |
+| Patience             | 20 epochs   |
+| Restore Best Weights | Yes         |
+| Batch Size           | 64          |
+| Epochs               | 200         |
+
