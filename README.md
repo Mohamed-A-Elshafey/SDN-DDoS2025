@@ -137,21 +137,21 @@ We performed a thorough EDA using histograms, boxplots, and correlation matrices
 <img width="940" height="283" alt="image" src="https://github.com/user-attachments/assets/9dc5fc4d-57dc-47cc-8372-5fbefa6a2a44" />
 <img width="940" height="279" alt="image" src="https://github.com/user-attachments/assets/599a59ee-01d5-47f0-9da2-22b8c7f29f8a" />
 
-*Figure 2: Features like rx‑packets, tx‑packets, rx‑bytes, tx‑bytes show heavily skewed distributions with extreme outliers – clear signs of volumetric DDoS attacks. CPU‑util spikes above 60% indicate resource stress.*
+*Boxplots and histograms of SDN traffic features in the SDN-DDoS2025 dataset. Features like rx‑packets, tx‑packets, rx‑bytes, tx‑bytes show heavily skewed distributions with extreme outliers – clear signs of volumetric DDoS attacks. CPU‑util spikes above 60% indicate resource stress.*
 
 <img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/25da091c-3e96-47d0-b159-c3bb409114de" />
 <img width="940" height="282" alt="image" src="https://github.com/user-attachments/assets/ddac3ee6-8b23-41bc-873e-31d1a02157b8" />
 <img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/580b8a56-744b-424c-b862-e175867662b5" />
 <img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/328e3c6a-24ea-4a01-8089-66ff00688572" />
 
-*Figure 3: Duration‑sec and duration‑nsec follow near‑normal distributions but with long right tails, suggesting some flows persist longer due to attack traffic. Aggregate packet count and entropy show moderate distributions with occasional high outliers.*
+*Boxplot and histogram analysis of SDN flow duration and traffic anomalies in the SDN-DDoS2025 dataset. Duration‑sec and duration‑nsec follow near‑normal distributions but with long right tails, suggesting some flows persist longer due to attack traffic. Aggregate packet count and entropy show moderate distributions with occasional high outliers.*
 
 ### Constant Features (Candidates for Removal)
 
 <img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/c20853d7-9062-445f-9ef1-6a54dd437e01" />
 <img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/c505069b-6aa7-4d7e-8786-4fd147c8666e" />
 
-*Figure 4: Features such as priority, idle‑timeout, hard‑timeout, table‑id, and error counters remain nearly constant – they can be removed to reduce dimensionality.*
+*Analysis of constant-value features in the SDNDDoS2025 dataset. Features such as priority, idle‑timeout, hard‑timeout, table‑id, and error counters remain nearly constant – they can be removed to reduce dimensionality.*
 
 ### Traffic-Based Analysis
 
@@ -161,13 +161,13 @@ We performed a thorough EDA using histograms, boxplots, and correlation matrices
 <img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/f3b1e483-e55d-44f1-896f-23de64e2141a" />
 <img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/43c404f2-9bf5-4fe1-b90c-440190c72e4b" />
 
-*Figure 5: Packet count, byte count, aggregate flow count, and packet‑in count are strong signals for various attack types.*
+*Analysis of traffic-based features in the SDN-DDoS2025 Dataset. Packet count, byte count, aggregate flow count, and packet‑in count are strong signals for various attack types.*
 
 ### Correlation Analysis
 
 <img width="940" height="781" alt="image" src="https://github.com/user-attachments/assets/2789aab2-67ce-4f75-b75a-17fd6d49c1a5" />
   
-*Figure 6: Strong positive correlations between packet counts and byte volumes (as expected). Timestamp correlates with aggregate traffic volume, indicating increasing trends during attacks. CPU‑util negatively correlates with traffic volume – the controller becomes overwhelmed and cannot process efficiently.*
+*Heatmap of 15 Features in the SDN-DDoS2025 dataset. Strong positive correlations between packet counts and byte volumes (as expected). Timestamp correlates with aggregate traffic volume, indicating increasing trends during attacks. CPU‑util negatively correlates with traffic volume – the controller becomes overwhelmed and cannot process efficiently.*
 
 - **rx‑packets** ↔ **rx‑bytes** (0.99)  
 - **tx‑packets** ↔ **tx‑bytes** (0.99)  
@@ -185,9 +185,8 @@ We propose a hybrid deep learning model that combines **1D Convolutional Neural 
 
 ### Architecture
 <img width="1956" height="570" alt="cnn-lstm" src="https://github.com/user-attachments/assets/a43350a0-4535-4557-913c-238276acfbc0" />
-Proposed CNN-LSTM hybrid model
-![Figure 6: Proposed CNN-LSTM hybrid model](images/figure6_cnnlstm.png)  
-*Figure 6: The model consists of initial Conv1D layers, an Inception block for multi‑scale feature extraction, an LSTM layer, and dense layers for classification.*
+
+*The proposed CNN-LSTM hybrid model. The model consists of initial Conv1D layers, an Inception block for multi‑scale feature extraction, an LSTM layer, and dense layers for classification.*
 
 **Layers:**
 - **Input**: features treated as timesteps.
