@@ -184,7 +184,8 @@ Entropy shows weak correlations, suggesting it provides independent information 
 We propose a hybrid deep learning model that combines **1D Convolutional Neural Networks (CNN)** for spatial feature extraction and **Long Short-Term Memory (LSTM)** for temporal dependency modelling.
 
 ### Architecture
-
+<img width="1956" height="570" alt="cnn-lstm" src="https://github.com/user-attachments/assets/a43350a0-4535-4557-913c-238276acfbc0" />
+Proposed CNN-LSTM hybrid model
 ![Figure 6: Proposed CNN-LSTM hybrid model](images/figure6_cnnlstm.png)  
 *Figure 6: The model consists of initial Conv1D layers, an Inception block for multi‑scale feature extraction, an LSTM layer, and dense layers for classification.*
 
