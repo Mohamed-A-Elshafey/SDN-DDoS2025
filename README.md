@@ -1,79 +1,317 @@
-# SDN-DDoS2025
- 
-## Description
+# 📡 SDN-DDoS2025 Dataset & CNN-LSTM Model for DDoS Detection in SDN
 
-SDN-DDoD2025 dataset is collected from an established SDN environment with OpenFlow-based additional features from ICDDoS2019. SDN-DDoD2025 contains port statistics and flow statistics. The captured port statistics, e.g., the number of packets and bytes transmitted and received, and error statistics. Also, the flow statistics, e.g., packet and byte counts, flow duration, and actions associated with the flow. This data provides a comprehensive view of the traffic and performance characteristics of the established SDN network.
+[![Dataset](https://img.shields.io/badge/Dataset-SDN--DDoS2025-blue)](https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025)
+[![Paper](https://img.shields.io/badge/Paper-ACI--07--2025--0278.R1-green)](https://doi.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-orange)](https://python.org)
 
-## SDN-CSV File Generation Methodology
+---
 
-This document outlines the steps required to generate SDN-CSV files as depicted in the methodology flowchart.
+## 📋 Table of Contents
+- [📖 Overview](#-overview)
+- [🎯 Dataset Highlights](#-dataset-highlights)
+- [📊 Feature Description](#-feature-description)
+- [📈 Exploratory Data Analysis](#-exploratory-data-analysis)
+  - [Distribution Analysis](#distribution-analysis)
+  - [Constant Features](#constant-features-candidates-for-removal)
+  - [Traffic-Based Analysis](#traffic-based-analysis)
+  - [Correlation Analysis](#correlation-analysis)
+- [🧠 Proposed CNN-LSTM Model](#-proposed-cnn-lstm-model)
+- [📊 Experimental Results](#-experimental-results)
+  - [Setup](#setup)
+  - [Results on CIC-DDoS2019](#results-on-cic-ddos2019)
+  - [Results on SDN-DDoS2025](#results-on-sdn-ddos2025)
+  - [Comparative Analysis](#comparative-analysis)
+  - [References for Benchmark Models](#references-for-benchmark-models)
+- [💡 Key Insights](#-key-insights)
+- [📚 Citation](#-citation)
+- [🤝 Contributing](#-contributing)
 
-# 1. Establish SDN Virtual Environment
+---
 
-First, Install Ubuntu 22.04.3 LTS as the base operating system.
-# 2. Install Mininet and Ryu Controller
+## 📖 Overview
 
-Mininet is a network emulator that allows users to create virtual networks on a single machine, widely used for SDN simulations. Ryu is an open-source SDN controller written in Python that provides network programmability.
+The **SDN-DDoS2025 dataset** is the **first SDN-specific** DDoS attack dataset derived from the well-known **CIC-DDoS2019** benchmark. It captures realistic network traffic in a **Software-Defined Networking (SDN)** environment.
 
-Installation Steps:
+This repository provides:
+- The **SDN-DDoS2025 dataset** (39 features, both port-level and flow-level statistics).
+- A comprehensive **Exploratory Data Analysis (EDA)** highlighting key attack indicators.
+- A **hybrid CNN-LSTM deep learning model** achieving state‑of‑the‑art DDoS detection accuracy on both traditional and SDN networks.
 
-   -Update system
-   sudo apt update
+> 📄 **Related publication:**  
+> *"Developing Realistic Distributed Denial-of-Service (DDoS) Attack Dataset for Software-Defined Networking (SDN)"* – Applied Computing and Informatics (Manuscript ID: ACI-07-2025-0278.R1)
 
-  -Install Mininet
-  sudo apt install mininet -y
+---
 
-  -Set up a Python virtual environment for Ryu
-  python3 -m venv ryu-env
-  source ryu-env/bin/activate
+## 🎯 Dataset Highlights
 
-  -Install Ryu and dependencies
-  pip install ryu
-  dep pip install eventlet==0.30.2
-  pip install psutil
+| Feature               | SDN-DDoS2025                          | CIC-DDoS2019                          |
+|-----------------------|----------------------------------------|---------------------------------------|
+| **Environment**       | SDN (Mininet + Ryu, OpenFlow 1.3)     | Traditional network                   |
+| **Attack types**      | 13 modern DDoS variants                | 13 modern DDoS variants                |
+| **Total features**    | 39                                     | 88                                    |
+| **Data types**        | Port-level + Flow-level statistics     | PCAP + CSV (bidirectional flows)      |
+| **SDN-specific**      | ✅ OpenFlow metrics, flow rules, CPU   | ❌                                    |
+| **Time component**    | ✅ Timestamp included                   | ✅ Timestamp included                   |
 
-  -Start the Ryu controller
-  ryu-manager ryu.app.ofctl_rest
+The dataset includes **benign traffic** and **13 DDoS attack types**: NTP, DNS, LDAP, MSSQL, NetBIOS, SNMP, SSDP, UDP, UDP-Lag, WebDDoS, SYN, TFTP, and PortScan.
+
+---
+
+## 📊 Feature Description
+
+The 39 features in SDN-DDoS2025 are divided into **port statistics** (physical/logical switch health) and **flow statistics** (traffic stream behaviour). Below is the complete feature list:
+
+| # | Feature               | Description                                      |
+|---|-----------------------|--------------------------------------------------|
+| 1 | `timestamp`           | ⏱️ Time of data capture                          |
+| 2 | `type`                | 📋 Data type (port / flow stats)                  |
+| 3 | `dpid`                | 🔌 Data path ID of the switch                    |
+| 4 | `port-no`             | 🔢 Port number on the switch                     |
+| 5 | `rx-packets`          | 📥 Received packets                              |
+| 6 | `tx-packets`          | 📤 Transmitted packets                           |
+| 7 | `rx-bytes`            | 📥 Received bytes                                |
+| 8 | `tx-bytes`            | 📤 Transmitted bytes                             |
+| 9 | `rx-dropped`          | ❌ Dropped received packets                      |
+|10 | `tx-dropped`          | ❌ Dropped transmitted packets                   |
+|11 | `rx-errors`           | ⚠️ Received packet errors                        |
+|12 | `tx-errors`           | ⚠️ Transmitted packet errors                     |
+|13 | `rx-frame-err`        | 🖼️ Frame errors                                  |
+|14 | `rx-over-err`         | 💥 Overrun errors                                |
+|15 | `rx-crc-err`          | 🔄 CRC errors                                    |
+|16 | `collisions`          | 💢 Network collisions                            |
+|17 | `priority`            | ⭐ Flow entry priority                           |
+|18 | `idle-timeout`        | ⏳ Idle timeout value                            |
+|19 | `hard-timeout`        | ⌛ Hard timeout value                            |
+|20 | `byte-count`          | 📦 Bytes in flow                                 |
+|21 | `packet-count`        | 📦 Packets in flow                               |
+|22 | `cookie`              | 🍪 Opaque flow identifier                        |
+|23 | `table-id`            | 📑 Flow table identifier                         |
+|24 | `duration-sec`        | ⏱️ Flow duration (seconds)                       |
+|25 | `duration-nsec`       | ⏱️ Flow duration (nanoseconds)                   |
+|26 | `length`              | 📏 Flow entry length                             |
+|27 | `flags`               | 🏷️ Flags associated with the flow entry          |
+|28 | `actions`             | ⚡ Actions associated with the flow entry         |
+|29 | `match`               | 🎯 Matching criteria for the flow entry          |
+|30 | `group-id`            | 👥 Group entry ID                                |
+|31 | `ref-count`           | 🔗 Reference count for the group                 |
+|32 | `flow-count`          | 📊 Number of flows in the group                  |
+|33 | `packet-in-count`     | 📨 Packet-in messages for the flow               |
+|34 | `aggregate-packet-count`| 📊 Aggregate packet count for the flow          |
+|35 | `aggregate-byte-count`| 📊 Aggregate byte count for the flow             |
+|36 | `aggregate-flow-count`| 📊 Aggregate flow count for the flow             |
+|37 | `cpu-util`            | 💻 CPU utilization                               |
+|38 | `active-flows`        | 🔄 Number of active flows                        |
+|39 | `entropy`             | 🎲 Entropy measure of traffic                    |
+
+### 🎯 14 Key DDoS Attack Indicators
+
+Based on EDA, these features show significant variation during attacks:
+
+1. `rx-packets` – sudden flood of incoming packets  
+2. `tx-packets` – abnormal outgoing patterns  
+3. `rx-bytes` – surge in incoming data  
+4. `tx-bytes` – anomalies in outgoing data  
+5. `rx-dropped` – packet drops due to overload  
+6. `tx-dropped` – congestion indicators  
+7. `rx-errors` – errors from traffic surges  
+8. `tx-errors` – transmission errors  
+9. `collisions` – increase during congestion  
+10. `cpu-util` – spikes during attack processing  
+11. `entropy` – randomness changes in traffic  
+12. `active-flows` – sudden connection increase  
+13. `duration-sec` – unusual flow duration patterns  
+14. `duration-nsec` – microsecond-level anomalies  
+
+---
+
+## 📈 Exploratory Data Analysis
+
+We performed a thorough EDA using histograms, boxplots, and correlation matrices.
+
+### Distribution Analysis
+
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/6129e6bb-8fa9-4271-947b-244907b65416" />
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/5b6ec268-783f-4eb3-88ad-c52d5e4b0791" />
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/3f5bb88c-f219-4546-871f-6a9ccdd9cb53" />
+<img width="940" height="283" alt="image" src="https://github.com/user-attachments/assets/9dc5fc4d-57dc-47cc-8372-5fbefa6a2a44" />
+<img width="940" height="279" alt="image" src="https://github.com/user-attachments/assets/599a59ee-01d5-47f0-9da2-22b8c7f29f8a" />
+
+*Figure 2: Features like rx‑packets, tx‑packets, rx‑bytes, tx‑bytes show heavily skewed distributions with extreme outliers – clear signs of volumetric DDoS attacks. CPU‑util spikes above 60% indicate resource stress.*
+
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/25da091c-3e96-47d0-b159-c3bb409114de" />
+<img width="940" height="282" alt="image" src="https://github.com/user-attachments/assets/ddac3ee6-8b23-41bc-873e-31d1a02157b8" />
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/580b8a56-744b-424c-b862-e175867662b5" />
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/328e3c6a-24ea-4a01-8089-66ff00688572" />
+
+*Figure 3: Duration‑sec and duration‑nsec follow near‑normal distributions but with long right tails, suggesting some flows persist longer due to attack traffic. Aggregate packet count and entropy show moderate distributions with occasional high outliers.*
+
+### Constant Features (Candidates for Removal)
+
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/c20853d7-9062-445f-9ef1-6a54dd437e01" />
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/c505069b-6aa7-4d7e-8786-4fd147c8666e" />
+
+*Figure 4: Features such as priority, idle‑timeout, hard‑timeout, table‑id, and error counters remain nearly constant – they can be removed to reduce dimensionality.*
+
+### Traffic-Based Analysis
+
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/49ba5c25-b3b1-43e3-8a0e-03c79f942bc6" />
+<img width="940" height="277" alt="image" src="https://github.com/user-attachments/assets/94cf5bbb-be1a-4b08-b245-378ce3b27682" />
+<img width="940" height="276" alt="image" src="https://github.com/user-attachments/assets/0ef0419c-edc1-40c8-b3ce-a2783f27cce1" />
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/f3b1e483-e55d-44f1-896f-23de64e2141a" />
+<img width="940" height="280" alt="image" src="https://github.com/user-attachments/assets/43c404f2-9bf5-4fe1-b90c-440190c72e4b" />
+
+*Figure 5: Packet count, byte count, aggregate flow count, and packet‑in count are strong signals for various attack types.*
+
+### Correlation Analysis
+
+<img width="940" height="781" alt="image" src="https://github.com/user-attachments/assets/2789aab2-67ce-4f75-b75a-17fd6d49c1a5" />
   
-# 3. Build SDN Network
+*Figure 6: Strong positive correlations between packet counts and byte volumes (as expected). Timestamp correlates with aggregate traffic volume, indicating increasing trends during attacks. CPU‑util negatively correlates with traffic volume – the controller becomes overwhelmed and cannot process efficiently.*
 
- Implement an SDN network similar to CIC-DDoS2019, consisting of:
+- **rx‑packets** ↔ **rx‑bytes** (0.99)  
+- **tx‑packets** ↔ **tx‑bytes** (0.99)  
+- **duration‑sec** ↔ **duration‑nsec** (0.95)  
+- **timestamp** ↔ **aggregate‑packet‑count** (0.85)  
+- **cpu‑util** ↔ **aggregate‑packet‑count** (–0.72)
 
- Attack-Network: A dedicated infrastructure for launching DDoS attacks.
+Entropy shows weak correlations, suggesting it provides independent information about traffic randomness.
 
- Victim-Network: A separate network connected to the controller via a switch, running normal benign traffic.
+---
 
- Use OpenFlow 1.3 for compatibility with the Ryu controller.
- 
-# 4. Ingest PCAP Files from CIC-DDoS2019
- The next step is to inject the CIC-DDoS2019 dataset PCAP files into the network using Wireshark, a widely used network protocol analyzer.
+## 🧠 Proposed CNN-LSTM Model
 
-# 5. Capture OpenFlow Statistics using Ryu's REST API
- Develop a Python script to capture network statistics via the Ryu REST API, collecting flow, port, and switch statistics for further analysis.
+We propose a hybrid deep learning model that combines **1D Convolutional Neural Networks (CNN)** for spatial feature extraction and **Long Short-Term Memory (LSTM)** for temporal dependency modelling.
 
-# 6. Parse and Store Network Statistics
-Captured traffic contains network statistics such as:Packet counts , Byte counts,Flow durations,Entropy ,CPU usage
+### Architecture
 
-These extracted features are saved in a CSV file (SDN-DDoS2025.csv) for deep learning-based DDoS detection.
-# 7. Final Output
-The extracted SDN statistics are stored in network-stats.csv, which can be used for machine learning and deep learning models.
+![Figure 6: Proposed CNN-LSTM hybrid model](images/figure6_cnnlstm.png)  
+*Figure 6: The model consists of initial Conv1D layers, an Inception block for multi‑scale feature extraction, an LSTM layer, and dense layers for classification.*
 
+**Layers:**
+- **Input**: features treated as timesteps.
+- **Initial Conv1D**: two layers with 32 filters, kernel size 3, BatchNorm, MaxPooling, Dropout 50%.
+- **Inception block**: three parallel Conv1D branches (kernel sizes 1, 3, 5), concatenated, MaxPooling, Dropout 30%.
+- **LSTM**: 256 units, return_sequences=False, L2 regularization.
+- **Dense layers**: two layers with 256 units, BatchNorm, ReLU, Dropout 50% (if needed).
+- **Output**: single unit with sigmoid activation for binary classification.
 
+### Hyperparameters
 
-## Data Format
+| Parameter                  | Value            |
+|----------------------------|------------------|
+| Optimizer                  | Adam             |
+| Learning rate              | 5e-4             |
+| Batch size                 | 64               |
+| Epochs                     | 200              |
+| Patience (early stopping)  | 20               |
+| Loss function              | Binary Crossentropy |
+| Conv1D filters             | 32               |
+| LSTM units                 | 256              |
+| Dense units                | 256              |
+| Regularization             | L2 (0.001)       |
 
-The dataset is provided in CSV format. Each row represents a network flow, with 39 features extracted. These features provide a comprehensive view of the network traffic and SDN environment. They include:
+> The model is trained with **ReduceLROnPlateau** and **ModelCheckpoint** callbacks.
 
-* **Basic Flow Information:**  `protocol`, `port numbers`, `packet counts`, `byte counts`, `flow duration`.
-* **Switch Statistics:** `timestamp`, `type`, `dpid`, `port-no`, `rx-packets`, `tx-packets`, `rx-bytes`, `tx-bytes`, `rx-dropped`, `tx-dropped`, `rx-errors`, `tx-errors`, `rx-frameerr`, `rx-overerr`, `rx-crc-err`, `collisions`.
-* **Flow Entry Details:** `priority`, `idle-timeout`, `hard-timeout`, `byte-count`, `packet-count`, `cookie`, `table-id`, `duration-sec`, `duration-nsec`, `length`, `flags`, `actions`, `match`.
-* **Group Entry Information:** `group-id`, `ref-count`, `flow-count`.
-* **Performance Metrics:** `packet-in-count`, `aggregate-packet-count`, `aggregate-byte-count`, `aggregate-flow-count`, `cpu-util`, `active-flows`, `entropy`.
+---
 
+## 📊 Experimental Results
 
-## Citation Information
+### Setup
 
-If you use this dataset in your research, please cite it as:
-https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025/
+- **Hardware**: Intel Core i7, 32 GB RAM, Windows 11.
+- **Software**: Python 3.10, TensorFlow, Jupyter Notebook.
+- **Datasets**: CIC-DDoS2019 (traditional) and SDN-DDoS2025 (SDN).
 
+### Results on CIC-DDoS2019
 
+The proposed CNN-LSTM model achieves near‑perfect scores on the traditional dataset, outperforming most benchmarks.
+
+| Metrics   | CNN-BRS [23] | Bays-CNN [24] | CNN-WRS [25] | Cybernet [26] | **CNN-LSTM (ours)** |
+|-----------|--------------|---------------|--------------|----------------|---------------------|
+| Accuracy  | 99.99%       | 99.90%        | 95.76%       | 99.99%         | **99.98%**          |
+| Recall    | 99.99%       | 98.90%        | 99.84%       | 99.99%         | **99.98%**          |
+| Precision | 99.99%       | 99.70%        | 95.87%       | 99.99%         | **99.98%**          |
+| F1-Score  | 99.99%       | 99.29%        | 95.95%       | 99.99%         | **99.98%**          |
+| MCC       | 99.93%       | 98.59%        | 29.64%       | 99.98%         | **99.70%**          |
+
+### Results on SDN-DDoS2025
+
+The CNN-LSTM model significantly outperforms all benchmarks on the SDN dataset, achieving **98.02% accuracy** – an improvement of **+6.69% over CNN-BRS** and **+16.69% over CNN-WRS**.
+
+| Metrics   | CNN-BRS [23] | Bays-CNN [24] | CNN-WRS [25] | Cybernet [26] | **CNN-LSTM (ours)** |
+|-----------|--------------|---------------|--------------|----------------|---------------------|
+| Accuracy  | 91.87%       | 88.26%        | 84.00%       | 93.14%         | **98.02%**          |
+| Recall    | 91.86%       | 79.57%        | 93.00%       | 92.80%         | **98.01%**          |
+| Precision | 93.96%       | 84.21%        | 87.00%       | 92.50%         | **98.04%**          |
+| F1-Score  | 92.25%       | 81.54%        | 90.00%       | 92.60%         | **98.03%**          |
+| MCC       | 94.83%       | 63.61%        | 52.11%       | 83.18%         | **94.49%**          |
+
+### Comparative Analysis
+
+#### Accuracy Improvements
+
+![Figure 8: Percentage improvements of proposed CNN-LSTM model](images/figure8_improvements.png)  
+*Figure 8: On SDN-DDoS2025, CNN-LSTM improves accuracy by up to 16.69% over benchmarks.*
+
+![Figure 9: Detection accuracy improvements of CNN-LSTM](images/figure9_improvements.png)  
+*Figure 9: CNN-LSTM consistently outperforms all baselines on both datasets.*
+
+#### Cross‑Evaluation Robustness
+
+![Figure 10: Accuracy drop from CIC-DDoS2019 to SDN-DDoS2025](images/figure10_drop.png)  
+*Figure 10: The proposed CNN-LSTM shows the smallest accuracy drop (1.96%) when moving from traditional to SDN data, demonstrating superior generalization.*
+
+### References for Benchmark Models
+
+The benchmark models compared in the tables above are based on the following publications:
+
+- **[23] CNN-BRS:** Aydın, H., Orman, Z., & Aydın, M. A. (2022). A long short-term memory (LSTM)-based distributed denial of service (DDoS) detection and defense system design in public cloud network environment. *Computers & Security, 118*, 102725. [Link](https://www.sciencedirect.com/science/article/pii/S0167404822001201)
+
+- **[24] Bays-CNN:** Badr, M. A., Elrewainy, A. F., & Elshafey, M. A. T. (2025). Hybrid spatial-spectral autoencoder models for lossy satellite image compression. *Journal of Aerospace Information Systems, 22*(5), 336-357. [Link](https://doi.org/10.2514/1.1011445)
+
+- **[25] CNN-WRS:** Bashaith, A., Binsalleeh, H., & AsSadhah, B. (2023). An explanation of the LSTM model used for DDoS attacks classification. *Applied Sciences, 13*(15), 8820. [Link](https://www.mdpi.com/2076-3417/13/15/8820)
+
+- **[26] Cybernet:** Kim, Y., Hakak, S., & Ghorbani, A. (2023). DDoS attack dataset (CICEV2023) against EV authentication in charging infrastructure. In *2023 20th Annual International Conference on Privacy, Security and Trust (PST)* (pp. 1-9). IEEE. [Link](https://doi.org/10.1109/PST58708.2023.10320202)
+
+---
+
+## 💡 Key Insights
+
+- **SDN-DDoS2025** is the first SDN‑native dataset derived from realistic DDoS traffic, filling a critical gap in SDN security research.
+- **EDA** reveals that volumetric attacks manifest as extreme outliers in packet/byte counts and CPU spikes, while constant features (priority, timeouts) can be removed.
+- The **CNN-LSTM hybrid model** excels at capturing both spatial and temporal patterns, achieving **98.02% accuracy** on SDN data.
+- **Robustness**: The proposed model suffers the smallest performance drop when transitioning from traditional to SDN environments, indicating strong generalization.
+
+---
+
+## 📚 Citation
+
+If you use the SDN-DDoS2025 dataset or the CNN-LSTM model in your research, please cite:
+
+```bibtex
+@article{SDN-DDoS2025,
+    title = {Developing Realistic Distributed Denial-of-Service (DDoS) Attack Dataset for Software-Defined Networking (SDN)},
+    author = {Mohamed A. Elshafey and ...},
+    journal = {Applied Computing and Informatics},
+    year = {2025},
+    note = {Manuscript ID: ACI-07-2025-0278.R1}
+}
+```
+
+Dataset available at: [https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025](https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you find issues or want to improve the dataset or models:
+- 🐛 Open an issue
+- 🔀 Submit a pull request
+- 📧 Contact the authors
+
+---
+
+<div align="center">
+⭐ Star this repository if you find it useful! ⭐
+</div>
