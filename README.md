@@ -251,8 +251,8 @@ The CNN-LSTM model significantly outperforms all benchmarks on the SDN dataset, 
 ### Comparative Analysis
 
 #### Accuracy Improvements
+<img width="1045" height="661" alt="image" src="[https://github.com/user-attachments/assets/6cd94764-d008-4bc0-ba38-075bb7ffe5ad](https://github.com/user-attachments/assets/a95eb6b8-2217-442a-a847-f367676b10c6)" />
 
-![Figure 8](https://github.com/user-attachments/assets/a95eb6b8-2217-442a-a847-f367676b10c6)
 *Figure 8: On SDN-DDoS2025, CNN-LSTM improves accuracy by up to 16.69% over benchmarks.*
 
 <img width="1045" height="661" alt="image" src="https://github.com/user-attachments/assets/6cd94764-d008-4bc0-ba38-075bb7ffe5ad" />
