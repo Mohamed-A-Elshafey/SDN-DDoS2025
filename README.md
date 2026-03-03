@@ -228,7 +228,7 @@ We propose a hybrid deep learning model that combines **1D Convolutional Neural 
 
 The proposed CNN-LSTM model achieves near‑perfect scores on the traditional dataset, outperforming most benchmarks.
 
-| Metrics   | CNN-BRS [23] | Bays-CNN [24] | CNN-WRS [25] | Cybernet [26] | **CNN-LSTM (ours)** |
+| Metrics   | CNN-BRS [1] | Bays-CNN [2] | CNN-WRS [3] | Cybernet [4] | **CNN-LSTM (ours)** |
 |-----------|--------------|---------------|--------------|----------------|---------------------|
 | Accuracy  | 99.99%       | 99.90%        | 95.76%       | 99.99%         | **99.98%**          |
 | Recall    | 99.99%       | 98.90%        | 99.84%       | 99.99%         | **99.98%**          |
@@ -240,7 +240,7 @@ The proposed CNN-LSTM model achieves near‑perfect scores on the traditional da
 
 The CNN-LSTM model significantly outperforms all benchmarks on the SDN dataset, achieving **98.02% accuracy** – an improvement of **+6.69% over CNN-BRS** and **+16.69% over CNN-WRS**.
 
-| Metrics   | CNN-BRS [23] | Bays-CNN [24] | CNN-WRS [25] | Cybernet [26] | **CNN-LSTM (ours)** |
+| Metrics   | CNN-BRS [1] | Bays-CNN [2] | CNN-WRS [3] | Cybernet [4] | **CNN-LSTM (ours)** |
 |-----------|--------------|---------------|--------------|----------------|---------------------|
 | Accuracy  | 91.87%       | 88.26%        | 84.00%       | 93.14%         | **98.02%**          |
 | Recall    | 91.86%       | 79.57%        | 93.00%       | 92.80%         | **98.01%**          |
@@ -268,13 +268,14 @@ The proposed CNN-LSTM shows the smallest accuracy drop (1.96%) when moving from 
 
 The benchmark models compared in the tables above are based on the following publications:
 
-- **[23] CNN-BRS:** Aydın, H., Orman, Z., & Aydın, M. A. (2022). A long short-term memory (LSTM)-based distributed denial of service (DDoS) detection and defense system design in public cloud network environment. *Computers & Security, 118*, 102725. [Link](https://www.sciencedirect.com/science/article/pii/S0167404822001201)
+- **[1] CNN-BRS:** A. A. Najar and S. M. Naik, “Cyber-secure sdn: A cnn-based approach for efficient detection and mitigation of ddos attacks,” Computers & Security, vol. 139, p.103716, 2024. [Link](https://dl.acm.org/doi/10.1016/j.cose.2024.103716)
 
-- **[24] Bays-CNN:** Badr, M. A., Elrewainy, A. F., & Elshafey, M. A. T. (2025). Hybrid spatial-spectral autoencoder models for lossy satellite image compression. *Journal of Aerospace Information Systems, 22*(5), 336-357. [Link](https://doi.org/10.2514/1.1011445)
+- **[2] Bays-CNN:** I. AlSaleh, A. Al-Samawi, and L. Nissirat, “Novel machine learning approach for ddos cloud detection: Bayesian-based cnn and data fusion enhancements,” Sensors,vol. 24, no. 5, 2024. [Link]( https://www.mdpi.com/1424-8220/24/5/1418)
 
-- **[25] CNN-WRS:** Bashaith, A., Binsalleeh, H., & AsSadhah, B. (2023). An explanation of the LSTM model used for DDoS attacks classification. *Applied Sciences, 13*(15), 8820. [Link](https://www.mdpi.com/2076-3417/13/15/8820)
+- **[3] CNN-WRS:** A. Najar and M. Naik S, “A robust ddos intrusion detection system using convolutional neural network,” Computers and Electrical Engineering, vol. 117, 04 2024. [Link](https://dl.acm.org/doi/10.1016/j.compeleceng.2024.109277)
 
-- **[26] Cybernet:** Kim, Y., Hakak, S., & Ghorbani, A. (2023). DDoS attack dataset (CICEV2023) against EV authentication in charging infrastructure. In *2023 20th Annual International Conference on Privacy, Security and Trust (PST)* (pp. 1-9). IEEE. [Link](https://doi.org/10.1109/PST58708.2023.10320202)
+- **[4] Cybernet:** M. B. A. Azar Abid Salih, “Cybernet model: A new deep learning model for cyber ddos attacks detection and recognition,” Computers, Materials
+& Continua, vol. 78, no. 1, pp. 1275–1295, 2024. [Link]([https://doi.org/10.1109/PST58708.2023.10320202](http://www.techscience.com/cmc/v78n1/55407))
 
 ---
 
