@@ -261,9 +261,9 @@ On SDN-DDoS2025, CNN-LSTM improves accuracy by up to 16.69% over benchmarks.
 Improvements in the detection accuracy of the proposed CNN-LSTM hybrid model relative to benchmarks on CIC-DDos2019 and SDN-DDoS2025 datasets. The proposed CNN-LSTM consistently outperforms all baselines on both datasets.
 
 #### Cross‑Evaluation Robustness
-<img width="1045" height="661" alt="image" src="https://github.com/user-attachments/assets/6d8c25f3-86f8-427f-8dda-63cf8ea27396" />
+<img width="1045" height="661" alt="image" src="https://github.com/user-attachments/assets/216e13a2-6a20-4832-883e-d6c24c476160" />
 
-The proposed CNN-LSTM shows the smallest accuracy drop (1.96%) when moving from traditional to SDN data, demonstrating superior generalization.*
+The proposed CNN-LSTM shows the smallest accuracy drop (1.96%) when moving from traditional to SDN data, demonstrating superior generalization.
 
 ### References for Benchmark Models
 
