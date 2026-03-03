@@ -275,7 +275,7 @@ The benchmark models compared in the tables above are based on the following pub
 - **[3] CNN-WRS:** A. Najar and M. Naik S, “A robust ddos intrusion detection system using convolutional neural network,” Computers and Electrical Engineering, vol. 117, 04 2024. [Link](https://dl.acm.org/doi/10.1016/j.compeleceng.2024.109277)
 
 - **[4] Cybernet:** M. B. A. Azar Abid Salih, “Cybernet model: A new deep learning model for cyber ddos attacks detection and recognition,” Computers, Materials
-& Continua, vol. 78, no. 1, pp. 1275–1295, 2024. [Link](https://doi.org/10.1109/PST58708.2023.10320202](http://www.techscience.com/cmc/v78n1/55407)
+& Continua, vol. 78, no. 1, pp. 1275–1295, 2024. [Link](http://www.techscience.com/cmc/v78n1/55407)
 
 ---
 
