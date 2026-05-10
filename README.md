@@ -1,7 +1,7 @@
 # 📡 SDN-DDoS2025 Dataset & CNN-LSTM Model for DDoS Detection in SDN
 
 [![Dataset](https://img.shields.io/badge/Dataset-SDN--DDoS2025-blue)](https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025)
-[![Paper](https://img.shields.io/badge/Paper-ACI--07--2025--0278.R1-green)](https://doi.org/)
+[![Paper](https://img.shields.io/badge/Paper-ACI-07-2025-0278-green)](https://doi.org/10.1108/ACI-07-2025-0278)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-orange)](https://python.org)
 
