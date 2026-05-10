@@ -271,7 +271,7 @@ The benchmark models compared in the tables above are based on the following pub
 
 - **[1] CNN-BRS:** Najar AA, Naik SM. Cyber-secure SDN: a CNN-based approach for efficient detection and mitigation of DDoS attacks. Comput Sec. 2024; 139: 103716. [Link](https://dl.acm.org/doi/10.1016/j.cose.2024.103716)
 
-- **[2] Bays-CNN:** AlSaleh I, Al-Samawi A, Nissirat L. Novel machine learning approach for DDoS cloud detection: Bayesian-based CNN and data fusion enhancements. Sensors. 2024; 24(5): 1418. doi: https://doi.org/10.3390/s24051418. [Link]( https://www.mdpi.com/1424-8220/24/5/1418)
+- **[2] Bays-CNN:** AlSaleh I, Al-Samawi A, Nissirat L. Novel machine learning approach for DDoS cloud detection: Bayesian-based CNN and data fusion enhancements. Sensors. 2024; 24(5): 1418. [Link]( https://www.mdpi.com/1424-8220/24/5/1418)
 
 - **[3] CNN-WRS:** Najar A, Naik SM. A robust DDoS intrusion detection system using convolutional neural network. Comput Electr Eng. 2024; 117: 104698. [Link](https://dl.acm.org/doi/10.1016/j.compeleceng.2024.109277)
 
