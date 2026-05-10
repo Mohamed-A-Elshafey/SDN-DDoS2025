@@ -269,14 +269,13 @@ The proposed CNN-LSTM shows the smallest accuracy drop (1.96%) when moving from 
 
 The benchmark models compared in the tables above are based on the following publications:
 
-- **[1] CNN-BRS:** A. A. Najar and S. M. Naik, “Cyber-secure sdn: A cnn-based approach for efficient detection and mitigation of ddos attacks,” Computers & Security, vol. 139, p.103716, 2024. [Link](https://dl.acm.org/doi/10.1016/j.cose.2024.103716)
+- **[1] CNN-BRS:** Najar AA, Naik SM. Cyber-secure SDN: a CNN-based approach for efficient detection and mitigation of DDoS attacks. Comput Sec. 2024; 139: 103716. [Link](https://dl.acm.org/doi/10.1016/j.cose.2024.103716)
 
-- **[2] Bays-CNN:** I. AlSaleh, A. Al-Samawi, and L. Nissirat, “Novel machine learning approach for ddos cloud detection: Bayesian-based cnn and data fusion enhancements,” Sensors,vol. 24, no. 5, 2024. [Link]( https://www.mdpi.com/1424-8220/24/5/1418)
+- **[2] Bays-CNN:** AlSaleh I, Al-Samawi A, Nissirat L. Novel machine learning approach for DDoS cloud detection: Bayesian-based CNN and data fusion enhancements. Sensors. 2024; 24(5): 1418. doi: https://doi.org/10.3390/s24051418. [Link]( https://www.mdpi.com/1424-8220/24/5/1418)
 
-- **[3] CNN-WRS:** A. Najar and M. Naik S, “A robust ddos intrusion detection system using convolutional neural network,” Computers and Electrical Engineering, vol. 117, 04 2024. [Link](https://dl.acm.org/doi/10.1016/j.compeleceng.2024.109277)
+- **[3] CNN-WRS:** Najar A, Naik SM. A robust DDoS intrusion detection system using convolutional neural network. Comput Electr Eng. 2024; 117: 104698. [Link](https://dl.acm.org/doi/10.1016/j.compeleceng.2024.109277)
 
-- **[4] Cybernet:** M. B. A. Azar Abid Salih, “Cybernet model: A new deep learning model for cyber ddos attacks detection and recognition,” Computers, Materials
-& Continua, vol. 78, no. 1, pp. 1275–1295, 2024. [Link](http://www.techscience.com/cmc/v78n1/55407)
+- **[4] Cybernet:** Azar ASMB. Cybernet model: a new deep learning model for cyber DDoS attacks detection and recognition. Comput Mater Cont. 2024; 78(1): 1275-95. [Link](http://www.techscience.com/cmc/v78n1/55407)
 
 ---
 
@@ -294,13 +293,19 @@ The benchmark models compared in the tables above are based on the following pub
 If you use the SDN-DDoS2025 dataset or the CNN-LSTM model in your research, please cite:
 
 ```bibtex
-@article{SDN-DDoS2025,
-    title = {Developing Realistic Distributed Denial-of-Service (DDoS) Attack Dataset for Software-Defined Networking (SDN)},
-    author = {Mohamed A. Elshafey and ...},
+@article{10.1108/ACI-07-2025-0278,
+    author = {Hassan, Mahmoud and Metwally, Khaled and Elshafey, Mohamed},
+    title = {Developing realistic distributed denial-of-service (DDoS) attack dataset for software-defined networking (SDN)},
     journal = {Applied Computing and Informatics},
-    year = {2025},
-    note = {Manuscript ID: ACI-07-2025-0278.R1}
+    pages = {1-23},
+    year = {2026},
+    month = {05},
+    issn = {2634-1964},
+    doi = {10.1108/ACI-07-2025-0278},
+    url = {https://doi.org/10.1108/ACI-07-2025-0278},
+    eprint = {https://www.emerald.com/aci/article-pdf/doi/10.1108/ACI-07-2025-0278/11577556/aci-07-2025-0278en.pdf},
 }
+
 ```
 
 Dataset available at: [https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025](https://github.com/Mohamed-A-Elshafey/SDN-DDoS2025)
